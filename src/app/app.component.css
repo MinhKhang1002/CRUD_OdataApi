@@ -1,0 +1,10 @@
+.background {
+  min-height: 110vh;
+}
+
+.container {
+  /* max-width: 1400px; */
+  padding-top: 20px;
+  padding-right: 2px;
+  margin: 0 auto;
+}

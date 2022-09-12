@@ -1,0 +1,124 @@
+<form action="" [formGroup]="peopleForm" (ngSubmit)="onSubmit(peopleForm.value)">
+  <div class="p-fluid grid p-3 border-round-2xl form  bg-white">
+    <h2 class=" col-12 text-center mb-3 text-3xl  text-green-600">People Form</h2>
+    <div class="field col-12 md:col-6">
+      <span class="p-float-label p-input-icon-left">
+        <i class="pi pi-user"></i>
+        <input [readonly]="isEdit" type="text" id="inputtext-left" pInputText formControlName="UserName"
+          pattern="^[a-z0-9_-]{8,15}$">
+        <label for="inputtext-left">UserName</label>
+      </span>
+      <div *ngIf="UserName?.invalid && (UserName?.dirty || UserName?.touched)" class="text-pink-500">
+        <div *ngIf="UserName?.errors?.['required']" class="mt-2">
+          UserName is required.
+        </div>
+        <div *ngIf="UserName?.errors?.['usernameIsDuplicate']" class="mt-2">
+          UserName name has been used !
+        </div>
+        <div *ngIf="UserName?.errors?.['pattern']" class="mt-2">
+          UserName name is invalid !
+        </div>
+      </div>
+    </div>
+    <div class="field col-12 md:col-6">
+      <span class="p-float-label p-input-icon-left">
+        <i class="pi pi-comment"></i>
+        <input type="text" id="inputtext-left" pInputText formControlName="FirstName">
+        <label for="inputtext-left">FirstName</label>
+      </span>
+      <div *ngIf="FirstName?.invalid && (FirstName?.dirty || FirstName?.touched)" class="text-pink-500">
+        <div *ngIf="FirstName?.errors" class="mt-2">
+          FirstName is required.
+        </div>
+      </div>
+    </div>
+    <div class="field col-12 md:col-6">
+      <span class="p-float-label p-input-icon-left">
+        <i class="pi pi-id-card"></i>
+        <input type="text" id="inputtext-left" pInputText formControlName="MiddleName">
+        <label for="inputtext-left">MiddleName</label>
+      </span>
+    </div>
+    <div class="field col-12 md:col-6">
+      <span class="p-float-label p-input-icon-left">
+        <i class="pi pi-heart"></i>
+        <input type="text" id="inputtext-left" pInputText formControlName="LastName">
+        <label for="inputtext-left">LastName</label>
+      </span>
+      <div *ngIf="LastName?.invalid && (LastName?.dirty || LastName?.touched)" class="text-pink-500">
+        <div *ngIf="LastName?.errors?.['maxlength']">
+          Max length must be less than 26 characters
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <div formArrayName="Emails">
+        <div *ngFor="let alias of emails.controls; let i=index">
+          <div class="p-inputgroup mb-4">
+            <span class="p-float-label p-input-icon-left">
+              <i class="pi pi-envelope"></i>
+              <input type="text" id="inputtext-left" class="w-full" pInputText [formControlName]="i">
+              <label for="inputtext-left">Emails</label>
+            </span>
+            <button type="button" pButton pRipple icon="pi pi-trash" class="p-button-danger"
+              (click)="removeEmail(i) "></button>
+          </div>
+          <div *ngIf="emails?.invalid && (emails?.dirty || emails?.touched)" class="text-pink-500">
+            <div *ngIf="emails?.errors?.['duplicate']">
+              Email is duplicated !
+            </div>
+            <div class="text-pink-500" *ngIf="emails.controls[i].errors ">
+              Email is invalid !.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div formArrayName="AddressInfo" class="w-full">
+      <div *ngFor="let address of addressInfo.controls; let i=index" [formGroupName]="i" class="grid p-2">
+        <div class="field col-12">
+          <div class="p-inputgroup">
+            <span class="p-float-label p-input-icon-left">
+              <i class="pi pi-home"></i>
+              <input type="text" id="inputtext-left" class="w-full" pInputText formControlName="Address">
+              <label for="inputtext-left">Address</label>
+            </span>
+            <button type="button" pButton pRipple icon="pi pi-trash" class="p-button-danger"
+              (click)="removeAddressInfo(i) "></button>
+          </div>
+        </div>
+        <div class=" grid p-2" formGroupName="City">
+          <div class="col-12 md:col-6">
+            <span class="p-float-label p-input-icon-left">
+              <i class="pi pi-moon"></i>
+              <input type="text" id="inputtext-left" pInputText formControlName="Name">
+              <label for="inputtext-left">City Name</label>
+            </span>
+          </div>
+          <div class="field col-12 md:col-6">
+            <span class="p-float-label p-input-icon-left">
+              <i class="pi pi-tag"></i>
+              <input type="text" id="inputtext-left" pInputText formControlName="CountryRegion">
+              <label for="inputtext-left">Country Region</label>
+            </span>
+          </div>
+          <div class="field col-12">
+            <span class="p-float-label p-input-icon-left">
+              <i class="pi pi-reddit"></i>
+              <input type="text" id="inputtext-left" pInputText formControlName="Region">
+              <label for="inputtext-left">Region</label>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="btn-add-email">
+      <button pButton type="button" label="Add email" class="p-button-warning ml-2" (click)="addEmail()"></button>
+    </div>
+    <div class="btn-add-addressInfo  ml-3">
+      <button pButton type="button" label="Add address info" class="p-button-help" (click)="addAddressInfo()"></button>
+    </div>
+    <button pButton type="submit" label="Submit" class="p-button-success mt-3 ml-2 mb-4"
+      [disabled]="!peopleForm.valid"></button>
+  </div>
+</form>

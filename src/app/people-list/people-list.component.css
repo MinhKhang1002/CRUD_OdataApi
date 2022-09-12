@@ -1,0 +1,4 @@
+.p-selectable-row:focus {
+  background: #22c55e !important;
+  color: #fff;
+}
